@@ -188,19 +188,18 @@ func (ul *Universalister) searchKeywordsInFile(path string) (list, error) {
 		return nil, err
 	}
 
-	stat, err := f.Stat()
+	_, err = f.Stat()
 	if err != nil {
 		return nil, err
 	}
-
-	filename := stat.Name()
 
 	defer f.Close()
 
 	sc := bufio.NewScanner(f)
 
 	for sc.Scan() {
-		lineMatchedLocation, err := ul.getMatchedAnnotationLocations(sc.Text(), filename, row)
+		// TODO: path
+		lineMatchedLocation, err := ul.getMatchedAnnotationLocations(sc.Text(), path, row)
 		if err != nil {
 			row++
 			continue
